@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             xmlns:utils="clr-namespace:C971_CourseTracker.Utils"
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="C971_CourseTracker.Views.ModifyCoursePage"
+             x:DataType="local:ModifyCoursePageViewModel"
+             BackgroundColor="#EEEEEE">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <utils:InverseBoolConverter x:Key="InverseBool" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="5" BackgroundColor="White">
+
+            <Label  Text="Course Name:" TextColor="DarkGray" FontSize="15"/>
+            <Editor  Text="{Binding Course.name}" TextColor="Black"/>
+            <Label  Text="Course Start Date:" TextColor="DarkGray" FontSize="15"/>
+            <DatePicker Date="{Binding Course.startDate}" TextColor="Black"/>
+            <Label  Text="Course End Date:" TextColor="DarkGray" FontSize="15"/>
+            <DatePicker Date="{Binding Course.endDate}" TextColor="Black"/>
+            <Label  Text="Course Status:" TextColor="DarkGray" FontSize="15"/>
+            <Picker Title="Status" ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Course.status}" TextColor="Black"/>
+            <Label  Text="Instructor Name:" TextColor="DarkGray" FontSize="15"/>
+            <Editor Text="{Binding Course.instuctorName}" TextColor="Black"/>
+            <Label  Text="Instructor Email:" TextColor="DarkGray" FontSize="15"/>
+            <Editor Text="{Binding Course.instuctorEmail}" TextColor="Black"/>
+            <Label  Text="Instructor Phone:" TextColor="DarkGray" FontSize="15"/>
+            <Editor Text="{Binding Course.instuctorPhone}" TextColor="Black"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" BackgroundColor="DarkGray" TextColor="White" HorizontalOptions="FillAndExpand" />
+                <Button Text="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding Course}" HorizontalOptions="FillAndExpand"  BackgroundColor="{StaticResource Primary}" TextColor="White"/>
+            </StackLayout>
+
+            <Button IsVisible="{Binding IsNew, Converter={StaticResource InverseBool}}" Text="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding Course}" HorizontalOptions="FillAndExpand"  BackgroundColor="#F44336" TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

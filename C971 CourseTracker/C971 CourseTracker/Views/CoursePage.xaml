@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             xmlns:model="clr-namespace:C971_CourseTracker.Models"
+             xmlns:converter="clr-namespace:C971_CourseTracker.Utils"
+             x:DataType="local:CoursePageViewModel"
+             x:Class="C971_CourseTracker.Views.CoursePage" BackgroundColor="#EEEEEE" Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Course" Command="{Binding RouteAdd}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:StatusConverter x:Key="StatusConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <RefreshView Command="{Binding LoadItems}" IsRefreshing="{Binding IsBusy}">
+        <CollectionView ItemsSource="{Binding Courses}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackLayout x:DataType="model:Course" Margin="3">
+                        <Grid ColumnDefinitions="auto, *, auto" RowDefinitions="*" BackgroundColor="White" Padding="10" Visual="Material">
+                            <Ellipse
+                                HeightRequest="30"
+                                WidthRequest="30"
+                                VerticalOptions="Center"
+                                Margin="0, 10, 10, 10"
+                                Fill="{Binding status, Converter={StaticResource StatusConverter}}"/>
+
+                            <Grid Grid.Column="1" RowDefinitions="auto, auto">
+                                <Label Text="{Binding name}" TextColor="Black" FontSize="25"/>
+                                <Label TextColor="DarkGray" Grid.Row="1" Text="{Binding CourseDate}" FontAttributes="Italic" FontSize="14"/>
+                            </Grid>
+
+                            <Label Grid.Column="2"  FontFamily="{StaticResource FontAwesomeSolid}" 
+                                Text="{x:Static fa:FontAwesomeIcons.Cog}" 
+                                WidthRequest="35"
+                                FontSize="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                TextColor="{x:StaticResource Primary}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:CoursePageViewModel}}, Path=RouteModify}" CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:CoursePageViewModel}}, Path=SetRoute}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </StackLayout>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

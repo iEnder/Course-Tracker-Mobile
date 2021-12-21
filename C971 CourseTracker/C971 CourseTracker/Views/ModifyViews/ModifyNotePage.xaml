@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             xmlns:utils="clr-namespace:C971_CourseTracker.Utils"
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="C971_CourseTracker.Views.ModifyNotePage"
+             x:DataType="local:ModifyNotePageViewModel"
+             BackgroundColor="#EEEEEE">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <utils:InverseBoolConverter x:Key="InverseBool" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="5" BackgroundColor="White">
+
+            <Editor Text="{Binding Note.content}" TextColor="Black"/>
+
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" BackgroundColor="DarkGray" TextColor="White" HorizontalOptions="FillAndExpand" />
+                <Button Text="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding Note}" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource Primary}" TextColor="White" />
+            </StackLayout>
+            <Button IsVisible="{Binding IsNew, Converter={StaticResource InverseBool}}" Text="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding Note}" HorizontalOptions="FillAndExpand"  BackgroundColor="#F44336" TextColor="White"/>
+            <Button Text="Share" Command="{Binding ShareCommand}" HorizontalOptions="FillAndExpand" TextColor="White"  BackgroundColor="{StaticResource Primary}" ></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

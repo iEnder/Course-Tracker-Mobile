@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:C971_CourseTracker.Models"
+             xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             BackgroundColor="#EEEEEE" 
+             x:Class="C971_CourseTracker.Views.NotesPage" Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Note" Command="{Binding RouteAddNote}"/>
+    </ContentPage.ToolbarItems>
+    <RefreshView Command="{Binding LoadItems}" IsRefreshing="{Binding IsBusy}">
+        <CollectionView ItemsSource="{Binding Notes}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackLayout x:DataType="model:Note" Margin="3">
+                        <Grid ColumnDefinitions="*, auto" RowDefinitions="*" BackgroundColor="White" Padding="10" Visual="Material">
+                            <Label Text="{Binding content, Mode=TwoWay}" TextColor="Black" FontSize="20"/>
+
+                            <Label Grid.Column="1"  FontFamily="{StaticResource FontAwesomeSolid}" 
+                                Text="{x:Static fa:FontAwesomeIcons.Cog}" 
+                                WidthRequest="35"
+                                FontSize="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                TextColor="{x:StaticResource Primary}">
+
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:NotesPageViewModel}}, Path=RouteModify}" CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

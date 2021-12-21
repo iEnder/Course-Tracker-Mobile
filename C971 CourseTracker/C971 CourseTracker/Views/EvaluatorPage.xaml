@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             x:Class="C971_CourseTracker.Views.EvaluatorPage"
+             x:DataType="local:EvaluatorPageViewModel"
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Click to Load Sample Data" TextColor="White" BackgroundColor="{StaticResource Primary}" Command="{Binding LoadDataCommand}">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

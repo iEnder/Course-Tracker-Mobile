@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             xmlns:utils="clr-namespace:C971_CourseTracker.Utils"
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="C971_CourseTracker.Views.ModifyAssessmentPage"
+             x:DataType="local:ModifyAssessmentPageViewModel"
+             BackgroundColor="#EEEEEE">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <utils:InverseBoolConverter x:Key="InverseBool" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="5" BackgroundColor="White">
+
+            <Label  Text="Assessment Name:" TextColor="DarkGray" FontSize="15"/>
+            <Editor  Text="{Binding Assessment.name}" TextColor="Black"/>
+            
+            <Label  Text="Assessment Type:" TextColor="DarkGray" FontSize="15"/>
+            <Picker Title="Type" ItemsSource="{Binding AssessmentOptions}" SelectedItem="{Binding Assessment.type}" TextColor="Black" />
+
+            <Label  Text="Assessment Due Date:" TextColor="DarkGray" FontSize="15"/>
+            <DatePicker Date="{Binding Assessment.dueDate}" TextColor="Black"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" BackgroundColor="DarkGray" TextColor="White" HorizontalOptions="FillAndExpand" />
+                <Button Text="Save" Command="{Binding SaveCommand}" CommandParameter="{Binding Assessment}" HorizontalOptions="FillAndExpand"  BackgroundColor="{StaticResource Primary}" TextColor="White"/>
+            </StackLayout>
+
+            <Button IsVisible="{Binding IsNew, Converter={StaticResource InverseBool}}" Text="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding Assessment}" HorizontalOptions="FillAndExpand"  BackgroundColor="#F44336" TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:viewmodels="clr-namespace:C971_CourseTracker.ViewModels"
+	xmlns:model="clr-namespace:C971_CourseTracker.Models"
+	xmlns:fa="clr-namespace:FontAwesome"
+             x:Class="C971_CourseTracker.Views.CourseDetailPage"
+             x:DataType="viewmodels:CourseDetailViewModel"
+             BackgroundColor="#EEEEEE" Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Assessment" Command="{Binding RouteAdd}"/>
+    </ContentPage.ToolbarItems>
+    <RefreshView Command="{Binding LoadItems}" IsRefreshing="{Binding IsBusy}">
+        <ScrollView HeightRequest="3000">
+            <StackLayout BindableLayout.ItemsSource="{Binding Course, Mode=TwoWay}">
+                <Label  Text="Course Info" TextColor="White" Padding="8" FontAttributes="Bold" FontSize="25" BackgroundColor="{x:StaticResource Primary}" HorizontalTextAlignment="Center"/>
+                <Grid ColumnDefinitions="*" RowDefinitions="*" BackgroundColor="White" Padding="10" Visual="Material">
+                    <StackLayout BackgroundColor="White">
+                        <Label  Text="Course Name:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.name}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Label  Text="Course Date:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.CourseDate}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Label  Text="Course Status:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.status}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Label  Text="Instructor Name:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.instuctorName}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Label  Text="Instructor Email:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.instuctorEmail}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Label  Text="Instructor Phone:" TextColor="DarkGray" FontSize="15"/>
+                        <Label  Text="{Binding Course.instuctorPhone}" TextColor="Black" FontSize="20" Padding="5" BackgroundColor="#e5e5e5"/>
+                        <Grid ColumnDefinitions="*, *" Margin="0 , 5">
+                            <Button Text="Edit Course" BackgroundColor="{x:StaticResource Primary}" TextColor="white" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CourseDetailViewModel}}, Path=RouteModifyCourse}" CommandParameter="{Binding Course}"/>
+                            <Button Grid.Column="1" Text="View Notes" BackgroundColor="{x:StaticResource Primary}" TextColor="white" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CourseDetailViewModel}}, Path=ShowNotes}" />
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+                <Label  Text="Assessments" TextColor="White" Padding="8" FontAttributes="Bold" FontSize="25" BackgroundColor="{x:StaticResource Primary}" HorizontalTextAlignment="Center"/>
+                <CollectionView ItemsSource="{Binding Assessments}" HeightRequest="500">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout x:DataType="model:Assessment" Margin="3">
+                                <Grid ColumnDefinitions="auto, *, auto" RowDefinitions="*" BackgroundColor="White" Padding="10" Visual="Material">
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Ellipse Fill="#2196F3" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Label Text="{Binding type}" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Margin="-0.5,-31.25,0,0" />
+                                    </StackLayout>
+                                    <Label Grid.Column="1" VerticalOptions="Center" Text="{Binding name}" TextColor="Black" FontSize="23"/>
+                                    <Label Grid.Column="2"  FontFamily="{StaticResource FontAwesomeSolid}" 
+                                       Text="{x:Static fa:FontAwesomeIcons.Cog}" 
+                                       WidthRequest="35"
+                                       FontSize="30"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       TextColor="{x:StaticResource Primary}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CourseDetailViewModel}}, Path=RouteModify}" CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

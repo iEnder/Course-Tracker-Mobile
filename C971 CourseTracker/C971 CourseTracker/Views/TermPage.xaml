@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:C971_CourseTracker.Models"
+             xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:local="clr-namespace:C971_CourseTracker.ViewModels"
+             x:DataType="local:TermPageViewModel" 
+             x:Class="C971_CourseTracker.Views.TermPage" BackgroundColor="#EEEEEE" Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Term" Command="{Binding RouteAdd}"/>
+    </ContentPage.ToolbarItems>
+    <RefreshView Command="{Binding LoadItems}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView ItemsSource="{Binding Terms}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackLayout x:DataType="model:Term" Margin="3">
+                        <Grid ColumnDefinitions="*, auto" RowDefinitions="*" BackgroundColor="White" Padding="10" Visual="Material">
+                            <Grid RowDefinitions="auto, auto">
+                                <Label Text="{Binding title}" TextColor="Black" FontSize="25"/>
+                                <Label Grid.Row="1" Text="{Binding TermDate}" TextColor="DarkGray" FontAttributes="Italic" FontSize="14"/>
+                            </Grid>
+
+                            <Label Grid.Column="1"  FontFamily="{StaticResource FontAwesomeSolid}" 
+                                Text="{x:Static fa:FontAwesomeIcons.Cog}" 
+                                WidthRequest="35"
+                                FontSize="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                TextColor="{x:StaticResource Primary}">
+                                
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:TermPageViewModel}}, Path=RouteModify}" CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:TermPageViewModel}}, Path=SetRoute}" CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </StackLayout>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
